@@ -11,7 +11,7 @@ Sistema para estimar el peso de ganado mediante análisis de imágenes.
 ## Equipo
 - Joseth Rojas Reyes
 - Oscar Ruiz Peres
--
+- Keity Lopez Reyes
 -
 -
 ## Metodología
