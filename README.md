@@ -10,7 +10,7 @@ Sistema para estimar el peso de ganado mediante análisis de imágenes.
 
 ## Equipo
 - Joseth Rojas Reyes
--
+- Chrisley Oporta Campos
 -
 -
 -
