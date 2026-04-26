@@ -4,54 +4,87 @@ namespace App\Http\Controllers;
 
 use App\Models\Pesaje;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class PesajeController extends Controller
 {
-    public function index()
+    public function listar(): JsonResponse
     {
-        return Pesaje::all();
-    }
+        $pesajes = Pesaje::all();
 
-    public function porAnimal($animal_id)
-    {
-        return Pesaje::where('animal_id', $animal_id)->get();
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'animal_id' => 'required|exists:animales,id',
-            'peso_estimado' => 'required|numeric',
-            'peso_real' => 'nullable|numeric',
-            'fecha' => 'required|date',
-            'fuente' => 'nullable|string'
+        return response()->json([
+            'exito' => true,
+            'datos' => $pesajes
         ]);
-
-        $pesaje = Pesaje::create($request->all());
-
-        return response()->json($pesaje, 201);
     }
 
-    public function show($id)
+    public function obtenerPorAnimal(int $animal_id): JsonResponse
     {
-        return Pesaje::findOrFail($id);
+        $pesajes = Pesaje::where('animal_id', $animal_id)->get();
+
+        return response()->json([
+            'exito' => true,
+            'datos' => $pesajes
+        ]);
     }
 
-    // ✏️ Editar
-    public function update(Request $request, $id)
+    public function crear(Request $request): JsonResponse
+    {
+        $datos = $this->validarDatos($request);
+
+        $pesaje = Pesaje::create($datos);
+
+        return response()->json([
+            'exito' => true,
+            'mensaje' => 'Pesaje creado correctamente',
+            'datos' => $pesaje
+        ], 201);
+    }
+
+    public function obtener(int $id): JsonResponse
     {
         $pesaje = Pesaje::findOrFail($id);
 
-        $pesaje->update($request->all());
-
-        return response()->json($pesaje);
+        return response()->json([
+            'exito' => true,
+            'datos' => $pesaje
+        ]);
     }
 
-    public function destroy($id)
+    public function actualizar(Request $request, int $id): JsonResponse
+    {
+        $pesaje = Pesaje::findOrFail($id);
+
+        $datos = $this->validarDatos($request);
+
+        $pesaje->update($datos);
+
+        return response()->json([
+            'exito' => true,
+            'mensaje' => 'Pesaje actualizado correctamente',
+            'datos' => $pesaje
+        ]);
+    }
+
+    public function eliminar(int $id): JsonResponse
     {
         $pesaje = Pesaje::findOrFail($id);
         $pesaje->delete();
 
-        return response()->json(['mensaje' => 'Pesaje eliminado']);
+        return response()->json([
+            'exito' => true,
+            'mensaje' => 'Pesaje eliminado correctamente'
+        ]);
+    }
+
+    private function validarDatos(Request $request): array
+    {
+        return $request->validate([
+            'animal_id' => 'required|exists:animals,id',
+            'peso_estimado' => 'required|numeric|min:0',
+            'peso_real' => 'nullable|numeric|min:0',
+            'fecha' => 'required|date',
+            'fuente' => 'nullable|string|max:255'
+        ]);
     }
 }
