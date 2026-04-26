@@ -16,3 +16,13 @@ Route::prefix('pesajes')->group(function () {
 //--------------------------------------
 
 });
+
+Route::prefix('fincas')->group(function () {
+
+    Route::post('/', [FincaController::class, 'crearFinca']);
+    Route::get('/', [FincaController::class, 'listarFincas']);
+    Route::get('/{id}', [FincaController::class, 'obtenerFinca']);
+    Route::put('/{id}', [FincaController::class, 'actualizarFinca']);
+    Route::delete('/{id}', [FincaController::class, 'eliminarFinca']);
+    Route::get('/usuario/{id}', [FincaController::class, 'obtenerFincasPorUsuario']);
+});
