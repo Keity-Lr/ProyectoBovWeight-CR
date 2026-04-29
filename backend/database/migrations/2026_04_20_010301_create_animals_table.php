@@ -6,28 +6,37 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-         Schema::create('animales', function (Blueprint $table) {
-        $table->id();
-        $table->string('numero_arete')->unique();
-        $table->string('nombre')->nullable();
-        $table->string('raza')->nullable();
-        $table->date('fecha_nacimiento')->nullable();
-        $table->string('estado')->default('activo');
-        $table->foreignId('finca_id')->constrained()->onDelete('cascade');
-        $table->timestamps();
+        Schema::create('animales', function (Blueprint $table) {
+            $table->id();
+            $table->string('numero_arete')->unique();
+            $table->string('nombre')->nullable();
+
+            // 🔥 CAMBIO IMPORTANTE (normalización)
+            $table->foreignId('raza_id')
+                  ->nullable()
+                  ->constrained('razas')
+                  ->nullOnDelete();
+
+            $table->date('fecha_nacimiento')->nullable();
+            $table->string('estado')->default('activo');
+
+            // Relación con finca
+            $table->foreignId('finca_id')
+                  ->constrained()
+                  ->cascadeOnDelete();
+
+            // Índices
+            $table->index('numero_arete');
+            $table->index('estado');
+
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('animals');
+        Schema::dropIfExists('animales');
     }
 };

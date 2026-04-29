@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Pesaje;
 
 class Imagen extends Model
 {
-    use HasFactory;
+    protected $table = 'imagenes';
 
     protected $fillable = [
-        'animal_id',
+        'pesaje_id',
         'url',
         'procesada',
         'fecha'
@@ -21,9 +21,10 @@ class Imagen extends Model
         'fecha' => 'date'
     ];
 
-    // 🔗 Relación: la imagen pertenece a un animal
-    public function animal()
+    // 🔗 Relaciones
+
+    public function pesaje()
     {
-        return $this->belongsTo(Animal::class);
+        return $this->belongsTo(Pesaje::class);
     }
 }

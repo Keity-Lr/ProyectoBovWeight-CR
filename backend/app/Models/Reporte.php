@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Reporte extends Model
 {
-    use HasFactory;
+    protected $table = 'reportes';
 
     protected $fillable = [
         'user_id',
@@ -20,9 +20,11 @@ class Reporte extends Model
         'fecha' => 'date'
     ];
 
-    // 🔗 Relación: el reporte pertenece a un usuario
+    // 🔗 Relaciones
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
 }
