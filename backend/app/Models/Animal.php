@@ -2,37 +2,42 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Finca;
+use App\Models\Pesaje;
+use App\Models\Raza;
 
 class Animal extends Model
 {
-    use HasFactory;
+    protected $table = 'animales';
 
     protected $fillable = [
         'numero_arete',
         'nombre',
-        'raza',
+        'raza_id',
         'fecha_nacimiento',
         'estado',
         'finca_id'
     ];
 
-    // 🔗 Relación: el animal pertenece a una finca
+    protected $casts = [
+        'fecha_nacimiento' => 'date'
+    ];
+
+    // 🔗 Relaciones
+
     public function finca()
     {
         return $this->belongsTo(Finca::class);
     }
 
-    // 🔗 Relación: un animal tiene muchos pesajes
     public function pesajes()
     {
         return $this->hasMany(Pesaje::class);
     }
 
-    // 🔗 Relación: un animal tiene muchas imágenes
-    public function imagenes()
+    public function raza()
     {
-        return $this->hasMany(Imagen::class);
+        return $this->belongsTo(Raza::class);
     }
 }
