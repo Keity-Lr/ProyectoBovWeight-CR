@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PesajeController;
 use App\Http\Controllers\FincaController;
+use App\Http\Controllers\ReporteController;
 
 // RUTAS DE PESAJE
 Route::prefix('pesajes')->group(function () {
@@ -25,4 +26,16 @@ Route::prefix('fincas')->group(function () {
     Route::put('/{id}', [FincaController::class, 'actualizarFinca']);
     Route::delete('/{id}', [FincaController::class, 'eliminarFinca']);
     Route::get('/usuario/{id}', [FincaController::class, 'obtenerFincasPorUsuario']);
+});
+
+// RUTAS DE REPORTE
+Route::prefix('reportes')->group(function () {
+
+    Route::get('/', [ReporteController::class, 'listar']);
+    Route::get('/usuario/{user_id}', [ReporteController::class, 'obtenerPorUsuario']);
+    Route::post('/', [ReporteController::class, 'crear']);
+    Route::get('/{id}', [ReporteController::class, 'obtener']);
+    Route::put('/{id}', [ReporteController::class, 'actualizar']);
+    Route::delete('/{id}', [ReporteController::class, 'eliminar']);
+
 });
