@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PesajeController;
 use App\Http\Controllers\FincaController;
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\ImagenController;
 
 // RUTAS DE PESAJE
 Route::prefix('pesajes')->group(function () {
@@ -37,5 +38,17 @@ Route::prefix('reportes')->group(function () {
     Route::get('/{id}', [ReporteController::class, 'obtener']);
     Route::put('/{id}', [ReporteController::class, 'actualizar']);
     Route::delete('/{id}', [ReporteController::class, 'eliminar']);
+
+});
+
+// RUTAS DE IMAGEN
+Route::prefix('imagenes')->group(function () {
+
+    Route::get('/', [ImagenController::class, 'listar']);
+    Route::get('/animal/{animal_id}', [ImagenController::class, 'obtenerPorAnimal']);
+    Route::post('/', [ImagenController::class, 'crear']);
+    Route::get('/{id}', [ImagenController::class, 'obtener']);
+    Route::put('/{id}', [ImagenController::class, 'actualizar']);
+    Route::delete('/{id}', [ImagenController::class, 'eliminar']);
 
 });
