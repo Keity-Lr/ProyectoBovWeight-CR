@@ -5,6 +5,8 @@ use App\Http\Controllers\PesajeController;
 use App\Http\Controllers\FincaController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ImagenController;
+use App\Http\Controllers\AnimalController;
+
 
 // RUTAS DE PESAJE
 Route::prefix('pesajes')->group(function () {
@@ -50,5 +52,18 @@ Route::prefix('imagenes')->group(function () {
     Route::get('/{id}', [ImagenController::class, 'obtener']);
     Route::put('/{id}', [ImagenController::class, 'actualizar']);
     Route::delete('/{id}', [ImagenController::class, 'eliminar']);
+
+});
+
+// RUTAS DE ANIMALES
+Route::prefix('animales')->group(function () {
+
+    Route::post('/', [AnimalController::class, 'crear']);
+    Route::get('/', [AnimalController::class, 'listar']);
+    Route::get('/arete/{arete}', [AnimalController::class, 'buscarPorArete']);
+    Route::get('/{id}/historial', [AnimalController::class, 'historial']);
+    Route::get('/{id}', [AnimalController::class, 'obtener']);
+    Route::put('/{id}', [AnimalController::class, 'actualizar']);
+    Route::delete('/{id}', [AnimalController::class, 'eliminar']);
 
 });
