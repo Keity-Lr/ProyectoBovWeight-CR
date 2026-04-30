@@ -8,18 +8,25 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('fincas', function (Blueprint $table) {
+        Schema::create('reportes', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('ubicacion')->nullable();
 
             // Relación con usuario
             $table->foreignId('user_id')
                   ->constrained()
                   ->cascadeOnDelete();
 
-            // 🔥 Opcional (mejora rendimiento)
-            $table->index('nombre');
+            // Tipo de reporte
+            $table->string('tipo')->default('general');
+
+            // Ruta del archivo generado
+            $table->string('archivo_url')->nullable();
+
+            $table->date('fecha')->nullable();
+
+            // 🔥 Índices
+            $table->index('user_id');
+            $table->index('fecha');
 
             $table->timestamps();
         });
@@ -27,6 +34,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('fincas');
+        Schema::dropIfExists('reportes');
     }
 };

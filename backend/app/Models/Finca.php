@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Animal;
 
 class Finca extends Model
 {
-    use HasFactory;
+    protected $table = 'fincas';
 
     protected $fillable = [
         'nombre',
@@ -15,13 +16,13 @@ class Finca extends Model
         'user_id'
     ];
 
-    // 🔗 Relación: una finca pertenece a un usuario
-    public function user()
+    // 🔗 Relaciones
+
+    public function propietario()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    // 🔗 Relación: una finca tiene muchos animales
     public function animales()
     {
         return $this->hasMany(Animal::class);
