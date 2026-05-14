@@ -17,7 +17,8 @@ class Animal extends Model
         'raza_id',
         'fecha_nacimiento',
         'estado',
-        'finca_id'
+        'finca_id',
+        'ruta_pdf_registro',
     ];
 
     protected $casts = [

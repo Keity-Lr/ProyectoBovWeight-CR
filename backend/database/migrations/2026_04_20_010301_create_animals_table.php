@@ -30,6 +30,7 @@ return new class extends Migration
             // Índices
             $table->index('numero_arete');
             $table->index('estado');
+            $table->string('ruta_pdf_registro')->nullable();
 
             $table->timestamps();
         });
